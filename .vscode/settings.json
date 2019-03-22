@@ -1,0 +1,10 @@
+{
+    "sqltools.connections": [
+        {
+            "database": "/Volumes/BOOTCAMP/__CODEs/nodejs/yardstick/database/adonis.sqlite",
+            "dialect": "SQLite",
+            "name": "adonisJs"
+        }
+    ],
+    "sqltools.useNodeRuntime": true
+}
