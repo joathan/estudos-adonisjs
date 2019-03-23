@@ -21,3 +21,10 @@ Route.post("/authenticate", "AuthController.authenticate");
 
 
 Route.get("/app", "UserController.index").middleware(['auth']);
+
+Route.group(() => {
+  Route.resource("post", "PostController")
+    .apiOnly();
+    // .except("update");
+}).middleware(["auth"]);
+// Route.post('/post', 'PostController.create').validator('Post').middleware(['auth']);
