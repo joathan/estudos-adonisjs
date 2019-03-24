@@ -20,7 +20,10 @@ class PostController {
    * @param {View} ctx.view
    */
   async index () {
-    const posts = await Post.all()
+    const posts = await Post.query()
+      .with("user")
+      .fetch();
+
     return posts
   }
 
@@ -35,7 +38,7 @@ class PostController {
   async store ({ request, auth, response }) {
     const data = request.only(["content", "title"]);
 
-    const post = await Post.create(data);
+    const post = await Post.create({user_id: auth.user.id, ...data});
 
     return post;
   }
@@ -66,10 +69,10 @@ class PostController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async update ({ params, request, response }) {
+  async update ({ params, request, auth }) {
     const post = await Post.findOrFail(params.id)
     
-    const data = request.only(["content", "title"])
+    const data = request.only(["content", "title", "user_id"])
 
     await post.merge(data)
     await post.save()
